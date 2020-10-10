@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       ProjectName: GitHubActionsTest
 
@@ -18,8 +18,7 @@ jobs:
     - name: New
       shell: pwsh
       run: |
-         echo "New=NewTest1" >> $GITHUB_ENV
-         echo 'New=NewTest2' >> $GITHUB_ENV
+         echo "New=NewTest1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: Test
       shell: pwsh
