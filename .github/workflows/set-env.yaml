@@ -13,6 +13,7 @@ jobs:
     - name: Old
       run: |
          echo "::set-env name=Old::OldTest"
+         echo "action_state=yellow" >> $GITHUB_ENV
 
     - name: New
       shell: pwsh
@@ -28,3 +29,5 @@ jobs:
          echo $Old
          echo ${{ env.New }}
          echo $New
+         echo ${{ env.action_state }}
+         echo $action_state
