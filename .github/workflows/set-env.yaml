@@ -13,18 +13,18 @@ jobs:
     - name: Old
       run: |
          echo "::set-env name=Old::OldTest"
-         echo ${{ env.ProjectName }}
-         echo $ProjectName
-         echo ${{ env.Old }}
-         echo $Old
 
     - name: New
       shell: pwsh
       run: |
          echo "New=NewTest1" >> $GITHUB_ENV
          echo 'New=NewTest2' >> $GITHUB_ENV
-         Write-Host ${{ env.ProjectName }}
-         Write-Host $ProjectName
-         Write-Host ${{ env.New }}
-         Write-Host $env:New
-         Write-Host $New
+
+    - name: Test
+      run: |
+         echo ${{ env.ProjectName }}
+         echo $ProjectName
+         echo ${{ env.Old }}
+         echo $Old
+         echo ${{ env.New }}
+         echo $New
