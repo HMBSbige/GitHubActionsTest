@@ -1,0 +1,25 @@
+name: Set-Env
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      ProjectName: GitHubActionsTest
+
+    steps:
+    - name: Old
+      run: |
+         echo "::set-env name=Old::OldTest"
+         Write-Host ${{ env.Old }}
+
+    - name: New
+      run: |
+         echo "New=NewTest1" >> $GITHUB_ENV
+         echo 'New=NewTest2' >> $GITHUB_ENV         
+         echo "NewTest3" | Out-File -FilePath $env:New -Encoding utf8 -Append
+         Write-Host ${{ env.New }}
+         Write-Host $env:New
+         Write-Host $New
