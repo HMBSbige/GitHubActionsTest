@@ -22,12 +22,13 @@ jobs:
          echo 'New=NewTest2' >> $GITHUB_ENV
 
     - name: Test
+      shell: pwsh
       run: |
-         echo ${{ env.ProjectName }}
-         echo $ProjectName
-         echo ${{ env.Old }}
-         echo $Old
-         echo ${{ env.New }}
-         echo $New
-         echo ${{ env.action_state }}
-         echo $action_state
+         Write-Host ${{ env.ProjectName }}
+         Write-Host $ProjectName
+         Write-Host ${{ env.Old }}
+         Write-Host $Old
+         Write-Host ${{ env.New }}
+         Write-Host $New
+         Write-Host ${{ env.action_state }}
+         Write-Host $action_state
