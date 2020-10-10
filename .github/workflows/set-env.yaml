@@ -11,11 +11,13 @@ jobs:
 
     steps:
     - name: Old
+      shell: pwsh
       run: |
          echo "::set-env name=Old::OldTest"
          Write-Host ${{ env.Old }}
 
     - name: New
+      shell: pwsh
       run: |
          echo "New=NewTest1" >> $GITHUB_ENV
          echo 'New=NewTest2' >> $GITHUB_ENV         
