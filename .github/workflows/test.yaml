@@ -3,14 +3,16 @@ name: Test
 on: [push]
 
 jobs:
+  environment:
+    name: test1
   build:
-
     runs-on: ubuntu-latest
     env:
       ProjectName: GitHubActionsTest
 
     steps:
-      - shell: pwsh
+      - name: test secrets
+        shell: pwsh
         env:
           SUPER_SECRET: ${{ secrets.KEY0 }}
         run: |
