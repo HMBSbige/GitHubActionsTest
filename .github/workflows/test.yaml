@@ -1,0 +1,17 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      ProjectName: GitHubActionsTest
+
+    steps:
+      - shell: pwsh
+        env:
+          SUPER_SECRET: ${{ secrets.KEY0 }}
+        run: |
+          Write-Host "$env:SUPER_SECRET"
