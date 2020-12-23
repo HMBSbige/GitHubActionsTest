@@ -3,9 +3,8 @@ name: Test
 on: [push]
 
 jobs:
-  environment:
-    name: test1
   build:
+    environment: test1
     runs-on: ubuntu-latest
     env:
       ProjectName: GitHubActionsTest
