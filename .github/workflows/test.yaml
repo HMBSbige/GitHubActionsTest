@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-    environment: test1
     runs-on: ubuntu-latest
     env:
       ProjectName: GitHubActionsTest
