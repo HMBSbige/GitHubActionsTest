@@ -15,4 +15,4 @@ jobs:
     - name: Test
       shell: pwsh
       run: |
-         echo "Test"
+         echo $PWD
