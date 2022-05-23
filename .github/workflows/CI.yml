@@ -38,6 +38,7 @@ jobs:
 
   package:
     name: Package
+    needs: [test-windows, test-linux]
     runs-on: ubuntu-latest
 
     steps:
