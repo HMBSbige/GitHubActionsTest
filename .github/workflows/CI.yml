@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ matrix.env_name }}
     permissions:
-      environment: write
+      repository-projects: write
 
     steps:
       - name: Checkout code
