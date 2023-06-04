@@ -19,6 +19,7 @@ jobs:
         run: |
           Write-Host ${{ vars.VERSION }}
           "latest_version=2000" >> $env:GITHUB_ENV
+          "GITHUB_REPOSITORY_ID=$env:GITHUB_REPOSITORY_ID" >> $env:GITHUB_ENV
 
       - name: Update VERSION
         shell: bash
@@ -31,7 +32,7 @@ jobs:
             -f name='VERSION' \
             -f value='${{ env.latest_version }}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
       - shell: pwsh
         run: |
