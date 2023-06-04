@@ -5,7 +5,8 @@ jobs:
   test-linux:
     strategy:
       matrix:
-        env_name: [env0]
+        env_name:
+          - env0
     name: Test Linux
     runs-on: ubuntu-latest
     environment: ${{ matrix.env_name }}
@@ -14,11 +15,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - shell: pwsh
+      - name: Debug
+        shell: pwsh
         run: |
           Write-Host ${{ vars.VERSION }}
-          $v=2121
-          "latest_version=$v" >> $env:GITHUB_ENV
+          Write-Host $URI
+          Write-Host $NAME
+          Write-Host $GET_VERSION_SCRIPT
+
+      - name: Get Latest Version
+        shell: pwsh
+        run: |
+          $version = & ${{ vars.GET_VERSION_SCRIPT }}
+          "latest_version=$version" >> $env:GITHUB_ENV
+
+      - name: Send Telegram Message
+        if: ${{ vars.VERSION }} != ${{ env.latest_version }}
+        shell: pwsh
+        run: |
+          ./Send-TelegramMessage.ps1 ${{ vars.VERSION }} ${{ env.latest_version }}
 
       - name: Update VERSION
         shell: bash
@@ -32,7 +47,3 @@ jobs:
             -f value='${{ env.latest_version }}'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-
-      - shell: pwsh
-        run: |
-          Write-Host ${{ vars.VERSION }}
