@@ -30,7 +30,7 @@ jobs:
         run: |
           $message = @"
           [${{ vars.NAME }}](${{ vars.URI }})
-          新版本：$latest_version
+          新版本：${{ env.latest_version }}
           "@
           $message = $message.replace('.', '\.')
           ./Send-TelegramMessage.ps1 ${{ vars.VERSION }} ${{ env.latest_version }}
