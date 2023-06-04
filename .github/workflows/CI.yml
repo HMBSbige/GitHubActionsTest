@@ -14,3 +14,19 @@ jobs:
       - shell: pwsh
         run: |
           Write-Host ${{ vars.VERSION }}
+
+      - shell: bash
+        run: |
+          gh api \
+            --method PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repositories/${{ vars.GITHUB_REPOSITORY_ID }}/environments/${{ environment.name }}/variables/VERSION \
+            -f name='VERSION' \
+            -f value='2000'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - shell: pwsh
+        run: |
+          Write-Host ${{ vars.VERSION }}
