@@ -17,7 +17,7 @@ jobs:
       - shell: pwsh
         run: |
           Write-Host ${{ vars.VERSION }}
-          "{latest_version}={2000}" >> $env:GITHUB_ENV
+          "latest_version=2000" >> $env:GITHUB_ENV
 
       - shell: bash
         run: |
@@ -25,7 +25,7 @@ jobs:
             --method PATCH \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repositories/${{ vars.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
+            /repositories/${{ env.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
             -f name='VERSION' \
             -f value='${{ env.latest_version }}'
         env:
