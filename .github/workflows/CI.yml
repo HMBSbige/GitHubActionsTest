@@ -13,4 +13,4 @@ jobs:
 
       - shell: pwsh
         run: |
-          Write-Host $TEST_VERSION
+          Write-Host $VERSION
