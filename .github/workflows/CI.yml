@@ -19,7 +19,6 @@ jobs:
         run: |
           Write-Host ${{ vars.VERSION }}
           "latest_version=2000" >> $env:GITHUB_ENV
-          "GITHUB_REPOSITORY_ID=$env:GITHUB_REPOSITORY_ID" >> $env:GITHUB_ENV
 
       - name: Update VERSION
         shell: bash
