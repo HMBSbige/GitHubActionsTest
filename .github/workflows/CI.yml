@@ -15,14 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Debug
-        shell: pwsh
-        run: |
-          Write-Host $env:VERSION
-          Write-Host $env:URI
-          Write-Host $env:NAME
-          Write-Host $env:GET_VERSION_SCRIPT
-
       - name: Get Latest Version
         shell: pwsh
         run: |
@@ -33,6 +25,8 @@ jobs:
         if: ${{ vars.VERSION }} != ${{ env.latest_version }}
         shell: pwsh
         run: |
+          $NAME = ${{ vars.NAME }}
+          $URI = ${{ vars.URI }}
           ./Send-TelegramMessage.ps1 ${{ vars.VERSION }} ${{ env.latest_version }}
 
       - name: Update VERSION
