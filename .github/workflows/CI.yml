@@ -1,7 +1,5 @@
 name: CI
 on: [workflow_dispatch, push]
-env:
-  GITHUB_REPOSITORY_ID: ${{ env.GITHUB_REPOSITORY_ID }}
 
 jobs:
   test-linux:
@@ -19,7 +17,7 @@ jobs:
       - shell: pwsh
         run: |
           Write-Host ${{ vars.VERSION }}
-          $v=2115
+          $v=2121
           "latest_version=$v" >> $env:GITHUB_ENV
 
       - name: Update VERSION
@@ -29,7 +27,7 @@ jobs:
             --method PATCH \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repositories/${{ env.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
+            /repositories/${{ github.event.repository.id }}/environments/${{ matrix.env_name }}/variables/VERSION \
             -f name='VERSION' \
             -f value='${{ env.latest_version }}'
         env:
