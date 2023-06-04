@@ -28,11 +28,15 @@ jobs:
           TELEGRAM_BOT_APITOKEN: ${{ secrets.TELEGRAM_BOT_APITOKEN }}
           TELEGRAM_BOT_CHATID: ${{ secrets.TELEGRAM_BOT_CHATID }}
         run: |
-          $NAME = '${{ vars.NAME }}'
-          $URI = '${{ vars.URI }}'
+          $message = @"
+          [${{ vars.NAME }}](${{ vars.URI }})
+          新版本：$latest_version
+          "@
+          $message = $message.replace('.', '\.')
           ./Send-TelegramMessage.ps1 ${{ vars.VERSION }} ${{ env.latest_version }}
 
       - name: Update VERSION
+        if: ${{ vars.VERSION != env.latest_version }}
         shell: bash
         run: |
           gh api \

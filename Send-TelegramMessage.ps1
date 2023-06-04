@@ -15,10 +15,4 @@ function Send-TelegramMessage {
 	Invoke-WebRequest $url -Method 'POST' -Body $body -ContentType "application/x-www-form-urlencoded; charset=utf-8"
 }
 
-$message = @"
-[$NAME]($URI)
-新版本：$latest_version
-"@
-$message = $message.replace('.', '\.')
-
 Send-TelegramMessage $message
