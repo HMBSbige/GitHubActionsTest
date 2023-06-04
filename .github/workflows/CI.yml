@@ -1,5 +1,7 @@
 name: CI
 on: [workflow_dispatch, push]
+env:
+  GITHUB_REPOSITORY_ID: ${{ env.GITHUB_REPOSITORY_ID }}
 
 jobs:
   test-linux:
@@ -19,7 +21,6 @@ jobs:
           Write-Host ${{ vars.VERSION }}
           $v=2115
           "latest_version=$v" >> $env:GITHUB_ENV
-          "GITHUB_REPOSITORY_ID=$env:GITHUB_REPOSITORY_ID" >> $env:GITHUB_ENV
 
       - name: Update VERSION
         shell: bash
