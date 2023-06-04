@@ -9,7 +9,7 @@ jobs:
     name: Test Linux
     runs-on: ubuntu-latest
     environment: ${{ matrix.env_name }}
-    permissions: read-all|write-all
+    permissions: write-all
 
     steps:
       - name: Checkout code
