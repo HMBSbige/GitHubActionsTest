@@ -14,3 +14,12 @@ jobs:
       - shell: pwsh
         run: |
           Write-Host ${{ vars.VERSION }}
+
+      - uses: UnlyEd/github-action-store-variable@v3
+        with:
+          variables: |
+            VERSION=1919810
+
+      - shell: pwsh
+        run: |
+          Write-Host ${{ vars.VERSION }}
