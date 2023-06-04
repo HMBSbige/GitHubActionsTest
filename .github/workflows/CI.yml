@@ -11,14 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - uses: UnlyEd/github-action-store-variable@v3
-        with:
-          variables: VERSION
-
       - shell: pwsh
         run: |
-          Write-Host $VERSION
-
-      - uses: UnlyEd/github-action-store-variable@v3
-        with:
-          variables: VERSION=1919810
+          Write-Host ${{ vars.VERSION }}
