@@ -20,6 +20,11 @@ jobs:
           "latest_version=2000" >> $env:GITHUB_ENV
           Write-Host $env:GITHUB_REPOSITORY_ID
 
+      - shell: bash
+        run: |
+          echo $GITHUB_REPOSITORY_ID
+          echo ${{ env.GITHUB_REPOSITORY_ID }}
+
       # - shell: bash
       #   run: |
       #     gh api \
