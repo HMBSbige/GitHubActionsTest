@@ -18,10 +18,10 @@ jobs:
       - name: Debug
         shell: pwsh
         run: |
-          Write-Host ${{ vars.VERSION }}
-          Write-Host $URI
-          Write-Host $NAME
-          Write-Host $GET_VERSION_SCRIPT
+          Write-Host $env:VERSION
+          Write-Host $env:URI
+          Write-Host $env:NAME
+          Write-Host $env:GET_VERSION_SCRIPT
 
       - name: Get Latest Version
         shell: pwsh
