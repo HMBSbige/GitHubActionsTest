@@ -9,8 +9,7 @@ jobs:
     name: Test Linux
     runs-on: ubuntu-latest
     environment: ${{ matrix.env_name }}
-    permissions:
-      repository-projects: write
+    permissions: write-all
 
     steps:
       - name: Checkout code
@@ -20,7 +19,7 @@ jobs:
         run: |
           Write-Host ${{ vars.VERSION }}
           "latest_version=2000" >> $env:GITHUB_ENV
-          "REPOSITORY_ID=$env:GITHUB_REPOSITORY_ID" >> $env:GITHUB_ENV
+          "GITHUB_REPOSITORY_ID=$env:GITHUB_REPOSITORY_ID" >> $env:GITHUB_ENV
 
       - name: Update VERSION
         shell: bash
@@ -29,7 +28,7 @@ jobs:
             --method PATCH \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repositories/${{ env.REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
+            /repositories/${{ env.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
             -f name='VERSION' \
             -f value='${{ env.latest_version }}'
         env:
