@@ -25,8 +25,8 @@ jobs:
         if: ${{ vars.VERSION }} != ${{ env.latest_version }}
         shell: pwsh
         run: |
-          $NAME = ${{ vars.NAME }}
-          $URI = ${{ vars.URI }}
+          $NAME = '${{ vars.NAME }}'
+          $URI = '${{ vars.URI }}'
           ./Send-TelegramMessage.ps1 ${{ vars.VERSION }} ${{ env.latest_version }}
 
       - name: Update VERSION
