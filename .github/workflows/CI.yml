@@ -13,4 +13,4 @@ jobs:
 
       - shell: pwsh
         run: |
-          Write-Host $VERSION
+          Write-Host ${{ vars.VERSION }}
