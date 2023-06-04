@@ -1,5 +1,5 @@
 name: CI
-on: workflow_dispatch
+on: [workflow_dispatch, push]
 
 jobs:
   test-linux:
@@ -18,19 +18,20 @@ jobs:
         run: |
           Write-Host ${{ vars.VERSION }}
           "latest_version=2000" >> $env:GITHUB_ENV
+          Write-Host $env:GITHUB_REPOSITORY_ID
 
-      - shell: bash
-        run: |
-          gh api \
-            --method PATCH \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repositories/${{ env.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
-            -f name='VERSION' \
-            -f value='${{ env.latest_version }}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - shell: bash
+      #   run: |
+      #     gh api \
+      #       --method PATCH \
+      #       -H "Accept: application/vnd.github+json" \
+      #       -H "X-GitHub-Api-Version: 2022-11-28" \
+      #       /repositories/${{ env.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
+      #       -f name='VERSION' \
+      #       -f value='${{ env.latest_version }}'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - shell: pwsh
-        run: |
-          Write-Host ${{ vars.VERSION }}
+      # - shell: pwsh
+      #   run: |
+      #     Write-Host ${{ vars.VERSION }}
