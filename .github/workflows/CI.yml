@@ -3,9 +3,12 @@ on: workflow_dispatch
 
 jobs:
   test-linux:
+    strategy:
+      matrix:
+        env_name: [env0]
     name: Test Linux
     runs-on: ubuntu-latest
-    environment: env0
+    environment: ${{ matrix.env_name }}
 
     steps:
       - name: Checkout code
@@ -14,6 +17,7 @@ jobs:
       - shell: pwsh
         run: |
           Write-Host ${{ vars.VERSION }}
+          "{latest_version}={2000}" >> $env:GITHUB_ENV
 
       - shell: bash
         run: |
@@ -21,9 +25,9 @@ jobs:
             --method PATCH \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repositories/${{ vars.GITHUB_REPOSITORY_ID }}/environments/${{ environment.name }}/variables/VERSION \
+            /repositories/${{ vars.GITHUB_REPOSITORY_ID }}/environments/${{ matrix.env_name }}/variables/VERSION \
             -f name='VERSION' \
-            -f value='2000'
+            -f value='${{ env.latest_version }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
