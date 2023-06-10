@@ -2,49 +2,21 @@ name: CI
 on: [workflow_dispatch, push]
 
 jobs:
-  test-linux:
+  test:
     strategy:
       matrix:
-        env_name:
-          - env0
-    name: Test Linux
-    runs-on: ubuntu-latest
+        os:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+    name: Test
+    runs-on: ${{ matrix.os }}
     environment: ${{ matrix.env_name }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get Latest Version
-        shell: pwsh
-        run: |
-          $version = & ${{ vars.GET_VERSION_SCRIPT }}
-          "latest_version=$version" >> $env:GITHUB_ENV
-
-      - name: Send Telegram Message
-        if: ${{ vars.VERSION != env.latest_version }}
-        shell: pwsh
-        env:
-          TELEGRAM_BOT_APITOKEN: ${{ secrets.TELEGRAM_BOT_APITOKEN }}
-          TELEGRAM_BOT_CHATID: ${{ secrets.TELEGRAM_BOT_CHATID }}
-        run: |
-          $message = @"
-          [${{ vars.NAME }}](${{ vars.URI }})
-          新版本：${{ env.latest_version }}
-          "@
-          $message = $message.replace('.', '\.')
-          ./Send-TelegramMessage.ps1 ${{ vars.VERSION }} ${{ env.latest_version }}
-
-      - name: Update VERSION
-        if: ${{ vars.VERSION != env.latest_version }}
+      - name: Get Version
         shell: bash
-        run: |
-          gh api \
-            --method PATCH \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repositories/${{ github.event.repository.id }}/environments/${{ matrix.env_name }}/variables/VERSION \
-            -f name='VERSION' \
-            -f value='${{ env.latest_version }}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: date --rfc-3339=date
